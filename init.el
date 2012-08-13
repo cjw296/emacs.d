@@ -119,3 +119,5 @@
 
 ;; C-x C-n invokes set-goal-column; disable it.
 (global-unset-key "\C-x\C-n")
+
+(require 'org-config)
