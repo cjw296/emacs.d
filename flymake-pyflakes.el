@@ -21,6 +21,8 @@
 ;; Usage:
 ;; (require 'flymake-pyflakes)
 
+(require 'cl)
+
 (defun flymake-pyflakes-create-tempfile (filename prefix)
   (make-temp-file (or prefix "flymake-pyflakes")))
 
