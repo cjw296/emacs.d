@@ -1,22 +1,14 @@
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(aquamacs-auto-face-mode t)
-;; '(auto-save-default nil)
-;; '(auto-save-interval 1000000)
-;; '(auto-save-timeout 100000)
+ '(auto-save-interval 1000000)
  '(backup-by-copying-when-mismatch t)
- '(column-number-mode t)
+ '(auto-save-default nil)
  '(delete-auto-save-files t)
+ '(auto-save-timeout 100000)
  '(make-backup-files nil)
  '(next-screen-context-lines 10)
+ '(aquamacs-auto-face-mode t)
+ '(column-number-mode t)
  '(tool-bar-mode nil))
-
- ;; IDO stuff
- '(ido-enable-flex-matching t)
- '(ido-everywhere t)
 
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
@@ -77,14 +69,19 @@
 ;;	     '(nil "\\`root\\'" "/ssh:%h:"))
 
 ;; for debugging
-(setq tramp-verbose 10)
-(setq tramp-debug-buffer t)
+;;(setq tramp-verbose 10)
+;;(setq tramp-debug-buffer t)
 
 (setq password-cache-expiry nil)
 
 (server-start)
 
+ ;; IDO stuff
+(require 'ido)
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
 (ido-mode 1)
+
 (cua-mode t)
 (recentf-mode t)
 
@@ -121,3 +118,19 @@
 (global-unset-key "\C-x\C-n")
 
 (require 'org-config)
+
+;; pretty xml
+(defun bf-pretty-print-xml-region (begin end)
+  "Pretty format XML markup in region. You need to have nxml-mode
+http://www.emacswiki.org/cgi-bin/wiki/NxmlMode installed to do
+this.  The function inserts linebreaks to separate tags that have
+nothing but whitespace between them.  It then indents the markup
+by using nxml's indentation rules."
+  (interactive "r")
+  (save-excursion
+      (nxml-mode)
+      (goto-char begin)
+      (while (search-forward-regexp "\>[ \\t]*\<" nil t) 
+        (backward-char) (insert "\n"))
+      (indent-region begin end))
+    (message "Ah, much better!"))
