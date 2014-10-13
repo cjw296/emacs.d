@@ -117,6 +117,9 @@
 ;; C-x C-n invokes set-goal-column; disable it.
 (global-unset-key "\C-x\C-n")
 
+;; Allow hash to be entered  
+(global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
+
 (require 'org-config)
 
 ;; pretty xml
